@@ -1,4 +1,4 @@
-# FractionLib
+# FractionLibrary
 
 A comprehensive C# library providing immutable value types for working with fractions and mixed numbers, with full support for arithmetic operations and comparisons.
 
@@ -17,14 +17,14 @@ A comprehensive C# library providing immutable value types for working with frac
 ## Project Structure
 
 ```
-FractionLib/
+FractionLibrary/
 ├── src/
-│   └── FractionLib/
+│   └── FractionLibrary/
 │       ├── Fraction.cs          # Fraction value type
 │       ├── MixedNumber.cs       # Mixed number value type
 │       └── FractionLib.csproj
 ├── tests/
-│   └── FractionLib.Tests/
+│   └── FractionLibrary.Tests/
 │       ├── FractionTests.cs     # Comprehensive Fraction tests
 │       ├── MixedNumberTests.cs  # Comprehensive MixedNumber tests
 │       └── FractionLib.Tests.csproj
@@ -36,7 +36,7 @@ FractionLib/
 ### Working with Fractions
 
 ```csharp
-using FractionLib;
+using FractionLibrary;
 
 // Create fractions
 var half = new Fraction(1, 2);
@@ -67,7 +67,7 @@ bool success = Fraction.TryParse("2/5", out var result);
 ### Working with Mixed Numbers
 
 ```csharp
-using FractionLib;
+using FractionLibrary;
 
 // Create mixed numbers
 var twoAndHalf = new MixedNumber(2, 1, 2);      // 2 1/2
@@ -128,17 +128,6 @@ dotnet test /p:CollectCoverage=true
 # Run specific test class
 dotnet test --filter "FullyQualifiedName~FractionTests"
 ```
-
-## Clean Code Principles Applied
-
-1. **Single Responsibility**: Each type has a clear, focused purpose
-2. **Immutability**: Both value types are immutable for thread safety
-3. **Meaningful Names**: Clear, descriptive names for all methods and properties
-4. **Small Functions**: Methods are concise and focused
-5. **DRY (Don't Repeat Yourself)**: Common logic is extracted and reused
-6. **Comprehensive Testing**: High test coverage with clear test names
-7. **Error Handling**: Proper exceptions with meaningful messages
-8. **Documentation**: XML documentation comments on public APIs
 
 ## Key Design Decisions
 
