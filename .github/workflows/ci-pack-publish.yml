@@ -1,5 +1,4 @@
 name: CI - Build, Test, Pack and Publish
-
 on:
   push:
     branches: [ main ]
@@ -17,12 +16,18 @@ jobs:
         fetch-depth: 0
 
     - name: Import signing key from secrets
-      if: ${{ secrets.SIGNING_KEY_BASE64 != '' }}
+      if: ${{ github.event_name == 'push' }}
       run: |
-        echo "Writing signing key file from SIGNING_KEY_BASE64 secret"
-        echo ${{ secrets.SIGNING_KEY_BASE64 }} | base64 --decode > signingkey.snk
-        chmod 600 signingkey.snk
-        ls -l signingkey.snk
+        # Only attempt to use the secret at runtime on the runner.
+        if [ -n "${{ secrets.SIGNING_KEY_BASE64 }}" ]; then
+          echo "Writing signing key file from SIGNING_KEY_BASE64 secret"
+          # decode into a file (don't print secret)
+          echo "${{ secrets.SIGNING_KEY_BASE64 }}" | base64 --decode > signingkey.snk
+          chmod 600 signingkey.snk
+          ls -l signingkey.snk
+        else
+          echo "SIGNING_KEY_BASE64 is not set; skipping signing key import"
+        fi
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
@@ -54,11 +59,11 @@ jobs:
         fi
 
     - name: Publish to GitHub Packages
-      if: github.event_name == 'push'
+      if: ${{ github.event_name == 'push' }}
       uses: nuget/setup-nuget@v1
 
     - name: Push package to GitHub Packages
-      if: github.event_name == 'push'
+      if: ${{ github.event_name == 'push' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
