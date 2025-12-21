@@ -6,99 +6,105 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.csproj.user
-*.vcxproj.user
 
 # Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
 [Bb]in/
 [Oo]bj/
-**/[Bb]in/
-**/[Oo]bj/
 
 # Visual Studio cache/options directory
 .vs/
-.vscode/
 
-# Rider
-.idea/
-*.sln.iml
-
-# NuGet
-*.nupkg
-*.snupkg
-.nuget/
-packages/
-**/packages/
-
-# Publish output
-*/publish/
-PublishProfiles/
-
-# Test results
+# MSTest test Results
 [Tt]est[Rr]esult*/
-TestResults/
-*.trx
-*.coverage
-*.CoverageResults
+[Bb]uild[Ll]og.*
 
-# Logs
+# NUnit
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# StyleCop
+StyleCopReport.xml
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_i.h
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
 *.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
 
 # Visual Studio profiler
 *.psess
 *.vsp
 *.vspx
-*.sap
-
-# Database files
-*.mdf
-*.ldf
-*.db
-*.dbmdl
-
-# Azure
-*.publishsettings
-
-# JetBrains Rider caches
-.idea/
-*.sln.dotCover
 
 # ReSharper
 _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
 
-# dotCover
-*.dotCover
+# JetBrains Rider
+.idea/
+*.sln.iml
 
-# VS Code
-.history
+# CodeRush
+.cr/
+
+# Python Tools for Visual Studio (PTVS)
+__pycache__/
+*.pyc
+
+# Cake
+tools/
+.dotnet/
+
+# Coverage reports
+coverage/
+*.coverage
+*.coveragexml
 
 # Node
 node_modules/
 
-# Temporary files
-*.tmp
-~$*
-*.orig
-*.pid
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Certificates
-*.pfx
-
-# Local secrets / config
-secrets.json
-appsettings.Development.json
-.env
-
-# Ignore generated designer files (optional)
-*.Designer.cs
-
-# Coverage tools
-coverage/
-
-# Allow adding any additional patterns below
+# Do not track local signing key
+signingkey.snk

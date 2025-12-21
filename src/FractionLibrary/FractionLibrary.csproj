@@ -7,4 +7,39 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <!-- Package metadata to produce a NuGet package from this project -->
+  <PropertyGroup>
+    <!-- Package identity -->
+    <PackageId>WLBLFractionLibrary</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Brandon Logsdon</Authors>
+    <Company>WithLoveByLogsdon</Company>
+
+    <!-- NuGet packaging settings -->
+    <Description>Immutable Fraction and MixedNumber types with arithmetic, parsing and conversions.</Description>
+    <PackageTags>fraction mixednumber math numeric</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+
+    <!-- Repository metadata (use your repo URL) -->
+    <RepositoryUrl>https://github.com/withlovebylogsdon/libraries.fraction</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+
+    <!-- Produce a NuGet package when building (you can also run `dotnet pack`) -->
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!-- Symbol/source packages -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <!-- Put packages in the standard output folder (optional) -->
+    <PackageOutputPath>$(OutputPath)</PackageOutputPath>
+
+    <!-- Assembly signing (enabled if the signing key file exists in the project root) -->
+    <AssemblyOriginatorKeyFile>signingkey.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly Condition="Exists('signingkey.snk')">true</SignAssembly>
+    <!-- When building on non-Windows runners (Linux/macOS) use public signing to avoid requiring a Windows-only strong name tool. -->
+    <PublicSign Condition="Exists('signingkey.snk') and '$(OS)' != 'Windows_NT'">true</PublicSign>
+    <PublicSign Condition="Exists('signingkey.snk') and '$(OS)' == 'Windows_NT'">false</PublicSign>
+  </PropertyGroup>
+
 </Project>
