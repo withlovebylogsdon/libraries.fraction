@@ -38,13 +38,14 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Restore dependencies
-        run: dotnet restore src/FractionLibrary/FractionLibrary.csproj
-      
+        run: dotnet restore
+
       - name: Build (Release)
-        run: dotnet build src/FractionLibrary/FractionLibrary.csproj --no-restore --configuration Release
-      
+        run: dotnet build --no-restore -c Release
+
       - name: Test
-        run: dotnet test --no-build -c Release --verbosity normal
+        # Let `dotnet test` build test projects as needed to avoid missing builds
+        run: dotnet test -c Release --verbosity normal
 
   pack-and-publish:
     name: Pack & Publish
@@ -87,7 +88,8 @@ jobs:
       - name: Pack FractionLibrary
         run: |
           mkdir -p ./artifacts
-          dotnet pack src/FractionLibrary/FractionLibrary.csproj -c Release -o ./artifacts /p:PackageVersion=${{ steps.compute_version.outputs.version }} --no-build
+          # Pack the library. Allow pack to build if necessary (don't use --no-build).
+          dotnet pack src/FractionLibrary/FractionLibrary.csproj -c Release -o ./artifacts /p:PackageVersion=${{ steps.compute_version.outputs.version }}
 
       - name: List artifacts
         run: ls -la ./artifacts || true
