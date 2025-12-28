@@ -47,6 +47,13 @@ jobs:
         # Let `dotnet test` build test projects as needed to avoid missing builds
         run: dotnet test -c Release --verbosity normal
 
+      - name: Upload build outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: fraction-build
+          path: src/FractionLibrary/bin/Release/net8.0/
+          retention-days: 7
+
   pack-and-publish:
     if: startsWith(github.ref, 'refs/tags/')
     name: Pack & Publish
@@ -62,6 +69,12 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
+
+      - name: Download build outputs
+        uses: actions/download-artifact@v4
+        with:
+          name: fraction-build
+          path: ./build-artifacts
 
       - name: Compute package version
         id: compute_version
