@@ -45,12 +45,13 @@
     <PublicSign Condition="Exists('signingkey.snk') and '$(OS)' == 'Windows_NT'">false</PublicSign>
   </PropertyGroup>
 
-    <!-- Use an external icon URL (local icons must be .png/.jpg). -->
-    <PackageIconUrl>https://raw.githubusercontent.com/withlovebylogsdon/libraries.fraction/main/assets/icon.png</PackageIconUrl>
-  
+    <!-- Include a package icon (PNG/JPG) from the project root -->
+    <PackageIcon>icon.png</PackageIcon>
+
   <ItemGroup>
-    <!-- Ensure README is included in the package -->
+    <!-- Ensure README and icon are included in the package -->
     <None Include="README.md" Pack="true" PackagePath="" />
+    <None Include="icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
