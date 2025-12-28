@@ -43,10 +43,9 @@
     <!-- When building on non-Windows runners (Linux/macOS) use public signing to avoid requiring a Windows-only strong name tool. -->
     <PublicSign Condition="Exists('signingkey.snk') and '$(OS)' != 'Windows_NT'">true</PublicSign>
     <PublicSign Condition="Exists('signingkey.snk') and '$(OS)' == 'Windows_NT'">false</PublicSign>
-  </PropertyGroup>
-
     <!-- Include a package icon (PNG/JPG) from the project root -->
     <PackageIcon>icon.png</PackageIcon>
+  </PropertyGroup>
 
   <ItemGroup>
     <!-- Ensure README and icon are included in the package -->
