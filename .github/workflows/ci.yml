@@ -76,6 +76,16 @@ jobs:
           name: fraction-build
           path: ./build-artifacts
 
+      - name: Place build outputs where pack expects them
+        run: |
+          TARGET_DIR=src/FractionLibrary/bin/Release/net8.0
+          mkdir -p "$TARGET_DIR"
+          if [ -d "./build-artifacts" ]; then
+            cp -r ./build-artifacts/* "$TARGET_DIR/" || true
+          fi
+          echo "Contents of $TARGET_DIR:"
+          ls -la "$TARGET_DIR" || true
+
       - name: Compute package version
         id: compute_version
         shell: bash
@@ -102,8 +112,8 @@ jobs:
       - name: Pack FractionLibrary
         run: |
           mkdir -p ./artifacts
-          # Pack the library. Allow pack to build if necessary (don't use --no-build).
-          dotnet pack src/FractionLibrary/FractionLibrary.csproj -c Release -o ./artifacts /p:PackageVersion=${{ steps.compute_version.outputs.version }}
+          # Use --no-build because build outputs were downloaded into the workspace.
+          dotnet pack src/FractionLibrary/FractionLibrary.csproj -c Release -o ./artifacts /p:PackageVersion=${{ steps.compute_version.outputs.version }} --no-build
 
       - name: List artifacts
         run: ls -la ./artifacts || true
