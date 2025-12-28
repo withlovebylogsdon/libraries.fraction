@@ -34,6 +34,9 @@
     <!-- Put packages in the standard output folder (optional) -->
     <PackageOutputPath>$(OutputPath)</PackageOutputPath>
 
+    <!-- Include a README in the NuGet package -->
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
     <!-- Assembly signing (enabled if the signing key file exists in the project root) -->
     <AssemblyOriginatorKeyFile>signingkey.snk</AssemblyOriginatorKeyFile>
     <SignAssembly Condition="Exists('signingkey.snk')">true</SignAssembly>
