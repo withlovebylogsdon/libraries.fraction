@@ -47,64 +47,64 @@ jobs:
         # Let `dotnet test` build test projects as needed to avoid missing builds
         run: dotnet test -c Release --verbosity normal
 
-  # pack-and-publish:
-  #   if: startsWith(github.ref, 'refs/tags/')
-  #   name: Pack & Publish
-  #   needs: build-and-test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
+  pack-and-publish:
+    if: startsWith(github.ref, 'refs/tags/')
+    name: Pack & Publish
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-  #     - name: Setup .NET
-  #       uses: actions/setup-dotnet@v3
-  #       with:
-  #         dotnet-version: '8.0.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
 
-  #     - name: Compute package version
-  #       id: compute_version
-  #       shell: bash
-  #       run: |
-  #         # Use VERSION file if present, otherwise default base
-  #         if [ -f VERSION ]; then
-  #           BASE_VERSION=$(cat VERSION | tr -d " \t\n\r")
-  #         else
-  #           BASE_VERSION="0.1.0"
-  #         fi
+      - name: Compute package version
+        id: compute_version
+        shell: bash
+        run: |
+          # Use VERSION file if present, otherwise default base
+          if [ -f VERSION ]; then
+            BASE_VERSION=$(cat VERSION | tr -d " \t\n\r")
+          else
+            BASE_VERSION="0.1.0"
+          fi
 
-  #         if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-  #           RAW_TAG="${GITHUB_REF#refs/tags/}"
-  #           VERSION="${RAW_TAG#v}"
-  #           echo "Detected tag push: ${RAW_TAG} -> publishing stable version ${VERSION}"
-  #         else
-  #           SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
-  #           VERSION="${BASE_VERSION}-ci${GITHUB_RUN_NUMBER}.${SHORT_SHA}"
-  #           echo "No tag detected. Using computed prerelease version: ${VERSION}"
-  #         fi
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            RAW_TAG="${GITHUB_REF#refs/tags/}"
+            VERSION="${RAW_TAG#v}"
+            echo "Detected tag push: ${RAW_TAG} -> publishing stable version ${VERSION}"
+          else
+            SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
+            VERSION="${BASE_VERSION}-ci${GITHUB_RUN_NUMBER}.${SHORT_SHA}"
+            echo "No tag detected. Using computed prerelease version: ${VERSION}"
+          fi
 
-  #         echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
 
-  #     - name: Pack FractionLibrary
-  #       run: |
-  #         mkdir -p ./artifacts
-  #         # Pack the library. Allow pack to build if necessary (don't use --no-build).
-  #         dotnet pack src/FractionLibrary/FractionLibrary.csproj -c Release -o ./artifacts /p:PackageVersion=${{ steps.compute_version.outputs.version }}
+      - name: Pack FractionLibrary
+        run: |
+          mkdir -p ./artifacts
+          # Pack the library. Allow pack to build if necessary (don't use --no-build).
+          dotnet pack src/FractionLibrary/FractionLibrary.csproj -c Release -o ./artifacts /p:PackageVersion=${{ steps.compute_version.outputs.version }}
 
-  #     - name: List artifacts
-  #       run: ls -la ./artifacts || true
+      - name: List artifacts
+        run: ls -la ./artifacts || true
 
-  #     - name: Publish to NuGet.org
-  #       env:
-  #         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-  #       run: |
-  #         if [ -z "$NUGET_API_KEY" ]; then
-  #           echo "NUGET_API_KEY secret not set. Skipping publish."
-  #           exit 1
-  #         fi
+      # - name: Publish to NuGet.org
+      #   env:
+      #     NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      #   run: |
+      #     if [ -z "$NUGET_API_KEY" ]; then
+      #       echo "NUGET_API_KEY secret not set. Skipping publish."
+      #       exit 1
+      #     fi
 
-  #         for pkg in ./artifacts/*.nupkg; do
-  #           echo "Pushing $pkg"
-  #           dotnet nuget push "$pkg" -k "$NUGET_API_KEY" -s https://api.nuget.org/v3/index.json --skip-duplicate
-  #         done
+      #     for pkg in ./artifacts/*.nupkg; do
+      #       echo "Pushing $pkg"
+      #       dotnet nuget push "$pkg" -k "$NUGET_API_KEY" -s https://api.nuget.org/v3/index.json --skip-duplicate
+      #     done
