@@ -36,8 +36,6 @@
 
     <!-- Include a README in the NuGet package -->
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <!-- Package icon (included in the package root) -->
-    <PackageIcon>icon.svg</PackageIcon>
 
     <!-- Assembly signing (enabled if the signing key file exists in the project root) -->
     <AssemblyOriginatorKeyFile>signingkey.snk</AssemblyOriginatorKeyFile>
@@ -47,10 +45,12 @@
     <PublicSign Condition="Exists('signingkey.snk') and '$(OS)' == 'Windows_NT'">false</PublicSign>
   </PropertyGroup>
 
+    <!-- Use an external icon URL (local icons must be .png/.jpg). -->
+    <PackageIconUrl>https://raw.githubusercontent.com/withlovebylogsdon/libraries.fraction/main/assets/icon.png</PackageIconUrl>
+  
   <ItemGroup>
-    <!-- Ensure README and icon are included in the package -->
+    <!-- Ensure README is included in the package -->
     <None Include="README.md" Pack="true" PackagePath="" />
-    <None Include="icon.svg" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
